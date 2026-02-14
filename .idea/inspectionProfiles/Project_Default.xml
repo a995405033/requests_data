@@ -1,0 +1,55 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="18">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="el-select" />
+            <item index="7" class="java.lang.String" itemvalue="el-option" />
+            <item index="8" class="java.lang.String" itemvalue="el-row" />
+            <item index="9" class="java.lang.String" itemvalue="el-button" />
+            <item index="10" class="java.lang.String" itemvalue="el-descriptions" />
+            <item index="11" class="java.lang.String" itemvalue="el-descriptions-item" />
+            <item index="12" class="java.lang.String" itemvalue="el-tag" />
+            <item index="13" class="java.lang.String" itemvalue="el-col" />
+            <item index="14" class="java.lang.String" itemvalue="el-table" />
+            <item index="15" class="java.lang.String" itemvalue="el-table-column" />
+            <item index="16" class="java.lang.String" itemvalue="el-input" />
+            <item index="17" class="java.lang.String" itemvalue="el-image" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="14">
+            <item index="0" class="java.lang.String" itemvalue="mysqlclient" />
+            <item index="1" class="java.lang.String" itemvalue="numpy" />
+            <item index="2" class="java.lang.String" itemvalue="Pillow" />
+            <item index="3" class="java.lang.String" itemvalue="brotlipy" />
+            <item index="4" class="java.lang.String" itemvalue="backports.zoneinfo" />
+            <item index="5" class="java.lang.String" itemvalue="drf-yasg-1.21.7" />
+            <item index="6" class="java.lang.String" itemvalue="requests" />
+            <item index="7" class="java.lang.String" itemvalue="Django" />
+            <item index="8" class="java.lang.String" itemvalue="djangorestframework" />
+            <item index="9" class="java.lang.String" itemvalue="cryptography" />
+            <item index="10" class="java.lang.String" itemvalue="certifi" />
+            <item index="11" class="java.lang.String" itemvalue="typing-extensions" />
+            <item index="12" class="java.lang.String" itemvalue="urllib3" />
+            <item index="13" class="java.lang.String" itemvalue="pytz" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
