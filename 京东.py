@@ -331,5 +331,5 @@ def get_comments(uuid,end):
 
 
 if __name__ == '__main__':
-    # get_goods('二手摄像',50)
-    get_comments(100312148882,90)
+    get_goods('手机',50)
+    # get_comments(100312148882,90)
