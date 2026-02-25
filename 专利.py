@@ -1940,7 +1940,9 @@ class CrawlerGUI:
         ttk.Spinbox(export_frame, from_=1, to=1000, textvariable=self.export_split_count, width=6).pack(side=tk.LEFT,
                                                                                                         padx=2)
         ttk.Label(export_frame, text="个分割").pack(side=tk.LEFT, padx=(2, 5))
-        ttk.Button(export_frame, text="导出到TXT", command=self.export_reg_numbers_to_txt, width=10).pack(side=tk.LEFT,
+        ttk.Button(export_frame, text="导出TXT", command=self.export_reg_numbers_to_txt, width=7).pack(side=tk.LEFT,
+                                                                                                       padx=2)
+        ttk.Button(export_frame, text="导出表格", command=self.export_reg_numbers_to_excel, width=7).pack(side=tk.LEFT,
                                                                                                           padx=2)
 
         # 公司名称爬取设置
@@ -1998,7 +2000,9 @@ class CrawlerGUI:
         ttk.Spinbox(company_export_frame, from_=1, to=1000, textvariable=self.company_export_split_count, width=6).pack(
             side=tk.LEFT, padx=2)
         ttk.Label(company_export_frame, text="个分割").pack(side=tk.LEFT, padx=(2, 5))
-        ttk.Button(company_export_frame, text="导出到TXT", command=self.export_company_names_to_txt, width=10).pack(
+        ttk.Button(company_export_frame, text="导出TXT", command=self.export_company_names_to_txt, width=7).pack(
+            side=tk.LEFT, padx=2)
+        ttk.Button(company_export_frame, text="导出表格", command=self.export_company_names_to_excel, width=7).pack(
             side=tk.LEFT, padx=2)
 
         row += 1
@@ -2390,6 +2394,76 @@ class CrawlerGUI:
         except Exception as e:
             self.log(f"❌ 导出失败: {e}\n")
             messagebox.showerror("错误", f"导出失败: {e}")
+
+    def export_reg_numbers_to_excel(self):
+        """根据分割设置导出备案号到多个Excel文件"""
+        if not self.registration_numbers:
+            messagebox.showwarning("警告", "备案号列表为空，无法导出")
+            return
+
+        # 选择保存目录
+        save_dir = filedialog.askdirectory(
+            title="选择导出目录",
+            initialdir=self.save_dir.get()
+        )
+        if not save_dir:
+            return
+
+        try:
+            split_count = self.export_split_count.get()
+            total_count = len(self.registration_numbers)
+            # 按split_count横向切割
+            chunks = [self.registration_numbers[i:i + split_count]
+                      for i in range(0, total_count, split_count)]
+            total_files = len(chunks)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+            for file_idx, chunk in enumerate(chunks, 1):
+                df = pd.DataFrame(chunk, columns=["备案号"])
+                file_name = f"备案号列表_{file_idx}_{timestamp}.xlsx"
+                file_path = os.path.join(save_dir, file_name)
+                df.to_excel(file_path, index=False, engine='openpyxl')
+
+            self.log(f"✅ 成功导出 {total_count} 个备案号，共 {total_files} 个Excel文件到: {save_dir}\n")
+            messagebox.showinfo("成功", f"成功导出 {total_count} 个备案号\n共 {total_files} 个文件")
+        except Exception as e:
+            self.log(f"❌ 导出表格失败: {e}\n")
+            messagebox.showerror("错误", f"导出表格失败: {e}")
+
+    def export_company_names_to_excel(self):
+        """根据分割设置导出公司名称到多个Excel文件"""
+        if not self.company_names:
+            messagebox.showwarning("警告", "公司名称列表为空，无法导出")
+            return
+
+        # 选择保存目录
+        save_dir = filedialog.askdirectory(
+            title="选择导出目录",
+            initialdir=self.save_dir.get()
+        )
+        if not save_dir:
+            return
+
+        try:
+            split_count = self.company_export_split_count.get()
+            total_count = len(self.company_names)
+            # 按split_count横向切割
+            chunks = [self.company_names[i:i + split_count]
+                      for i in range(0, total_count, split_count)]
+            total_files = len(chunks)
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+            for file_idx, chunk in enumerate(chunks, 1):
+                df = pd.DataFrame(chunk, columns=["公司名称"])
+                file_name = f"公司名称列表_{file_idx}_{timestamp}.xlsx"
+                file_path = os.path.join(save_dir, file_name)
+                df.to_excel(file_path, index=False, engine='openpyxl')
+
+            self.log(f"✅ 成功导出 {total_count} 个公司名称，共 {total_files} 个Excel文件到: {save_dir}\n")
+            messagebox.showinfo("成功", f"成功导出 {total_count} 个公司名称\n共 {total_files} 个文件")
+        except Exception as e:
+            self.log(f"❌ 导出表格失败: {e}\n")
+            messagebox.showerror("错误", f"导出表格失败: {e}")
 
     def update_reg_listbox(self):
         """更新备案号列表显示"""
