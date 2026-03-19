@@ -118,7 +118,7 @@ def crawl_boss_jobs(keyword, pages, output_file='boss_jobs.csv'):
     
     # URL编码关键词
     encoded_keyword = quote(keyword)
-    url = f'https://www.zhipin.com/web/geek/jobs?city=100010000&position=120105&query={encoded_keyword}'
+    url = f'https://www.zhipin.com/web/geek/jobs?city=100010000&query={encoded_keyword}'
     dp.get(url)
     
     # 存储所有职位数据
@@ -132,7 +132,7 @@ def crawl_boss_jobs(keyword, pages, output_file='boss_jobs.csv'):
         res = dp.listen.wait()
         # 获取响应体
         json_data = res.response.body
-        
+
         jobList = json_data['zpData']['jobList']
         
         for index in jobList:
@@ -141,10 +141,7 @@ def crawl_boss_jobs(keyword, pages, output_file='boss_jobs.csv'):
             if '实习生' in job_name:
                 continue
             
-            # 只爬取薪资中包含"K"的岗位
             salary_desc = index.get('salaryDesc', '')
-            if 'K' not in salary_desc.upper():
-                continue
             
             # 解析薪资信息
             salary_info = parse_salary(salary_desc)
@@ -210,7 +207,15 @@ def crawl_boss_jobs(keyword, pages, output_file='boss_jobs.csv'):
     return all_jobs
 
 
-# 示例使用
+IT_KEYWORDS = [
+    '人工智能工程师',
+]
+
 if __name__ == '__main__':
-    # 使用示例：爬取"插画师"关键词，爬取2页数据
-    crawl_boss_jobs(keyword='插画师', pages=2, output_file='boss_jobs.csv')
+    for kw in IT_KEYWORDS:
+        print(f'\n========== 开始爬取关键词：{kw} ==========')
+        output_file = f'boss_{kw}.csv'
+        crawl_boss_jobs(keyword=kw, pages=10, output_file=output_file)
+        wait_time = 1
+        print(f'关键词 [{kw}] 爬取完成，等待 {wait_time:.2f} 秒后继续下一个关键词...')
+        time.sleep(wait_time)
